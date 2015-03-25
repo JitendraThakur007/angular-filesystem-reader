@@ -21,15 +21,11 @@ This has to be the array of strings containing the extensions of the files you'r
 
 3. **skippable_folders** (Array of Strings) optional or null:
 If you want certain folders to be skipped, mention them as the elements of this array. 
-Each element should be of the form *<your_root_directory>/someDirectory/skipThisDirectory*.
-E.g. *['storage/sdcard1/Music', 'storage/sdcard1/Books']*
-Provide **null** if you don't need to skip/ignore any folders.
+Each element should be of the form: *<your_root_directory>/someDirectory/skipThisDirectory*. E.g. ['storage/sdcard1/Music', 'storage/sdcard1/Books']. Provide **null** if you don't need to skip/ignore any folders.
 
 4. **specific_folders** (Array of Strings) optional or null:
 If you want only certain folders to be **exclusively** scanned, mention them as the elements of this array. 
-Each element should be of the form *<your_root_directory>/someDirectory/skipThisDirectory*.
-E.g. *['storage/sdcard1/Music', 'storage/sdcard1/Books']*
-Provide **null** if you don't need to skip/ignore any folders.
+Each element should be of the form: *<your_root_directory>/someDirectory/skipThisDirectory*. E.g. ['storage/sdcard1/Music', 'storage/sdcard1/Books']. Provide **null** if you don't need to specify any exclusive folders.
 
 5. **qualifiedFileHandler** (Function):
 This is the success handler callback that you need to specify. Your callback should expect an array of qualifying file entry objects as its parameter.
@@ -51,12 +47,12 @@ angular.module('myApp', ['angular-fs-reader']).service('DeviceDataService', ['$q
 
         document.addEventListener('deviceready', function () {
             
-            angularFsReader.getFiles('file:///storage', ['mp3', 'wav'], ['storage/sdcard1/Music', 'storage/sdcard1/Books'], ['storage/emulated/0/', 'storage/sdcard1'], 
+            angularFsReader.getFiles('file:///storage', ['mp3', 'wav'], ['storage/sdcard1/Videos', 'storage/sdcard1/Books'], ['storage/emulated/0/', 'storage/sdcard1'], 
 			function(array){
 				console.log("My list of qualifying files!");
                 console.log(array);
             }, 
-			function(e){};
+			function(e){
 				console.log("Error:" + e);
             });
 
@@ -70,11 +66,12 @@ angular.module('myApp', ['angular-fs-reader']).service('DeviceDataService', ['$q
 
         document.addEventListener('deviceready', function () {
             
-            angularFsReader.getFiles('file:///storage', ['mp3', 'wav'], ['storage/sdcard1/Music', 'storage/sdcard1/Books'], ['storage/emulated/0/', 'storage/sdcard1'], null, function(e){};
+            angularFsReader.getFiles('file:///storage', ['mp3', 'wav'], ['storage/sdcard1/Videos', 'storage/sdcard1/Books'], ['storage/emulated/0/', 'storage/sdcard1'], null, function(e){};
 				console.log("Error:" + e);
             })
-			.then(function(stuff){
-                console.log(stuff);
+			.then(function(array){
+				console.log("My list of qualifying files!");
+                console.log(array);
             });;            
         });
 });
