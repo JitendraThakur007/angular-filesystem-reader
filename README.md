@@ -66,7 +66,7 @@ angular.module('myApp', ['angular-fs-reader']).service('DeviceDataService', ['$q
 
         document.addEventListener('deviceready', function () {
             
-            angularFsReader.getFiles('file:///storage', ['mp3', 'wav'], ['storage/sdcard1/Videos', 'storage/sdcard1/Books'], ['storage/emulated/0/', 'storage/sdcard1'], null, function(e){};
+            angularFsReader.getFiles('file:///storage', ['mp3', 'wav'], ['storage/sdcard1/Videos', 'storage/sdcard1/Books'], ['storage/emulated/0/', 'storage/sdcard1'], null, function(e){
 				console.log("Error:" + e);
             })
 			.then(function(array){
