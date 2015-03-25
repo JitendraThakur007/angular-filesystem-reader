@@ -45,7 +45,7 @@ A **Promise** that resolves to an array of qualifying file entry objects.
 
 
 ##Examples:
-1. Using **qualifiedFileHandler** callback:
+Using **qualifiedFileHandler** callback:
 ```javascript
 angular.module('myApp', ['angular-fs-reader']).service('DeviceDataService', ['$q' 'angularFsReader', function ($q, angularFsReader) {
 
@@ -64,7 +64,7 @@ angular.module('myApp', ['angular-fs-reader']).service('DeviceDataService', ['$q
 });
 ```
 
-2. Using the returned **Promise**:
+Using the returned **Promise**:
 ```javascript
 angular.module('myApp', ['angular-fs-reader']).service('DeviceDataService', ['$q' 'angularFsReader', function ($q, angularFsReader) {
 
