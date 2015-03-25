@@ -33,7 +33,7 @@ Provide **null** if you don't need to skip/ignore any folders.
 
 5. **qualifiedFileHandler** (Function):
 This is the success handler callback that you need to specify. Your callback should expect an array of qualifying file entry objects as its parameter.
-Note - In case you're willing to use the **Promise** route (see below), you can specify **null* instead of a callback.
+Note - In case you're willing to use the **Promise** route (see below), you can specify **null** instead of a callback.
 
 6. **reportError** (Function):
 This is the error handler callback that you need to specify, which will be invoked in case the root **nativeURL** you specify is not formatted properly or if such a directory does not exist.
@@ -64,7 +64,7 @@ angular.module('myApp', ['angular-fs-reader']).service('DeviceDataService', ['$q
 });
 ```
 
-2. Using the returned **Promise**
+2. Using the returned **Promise**:
 ```javascript
 angular.module('myApp', ['angular-fs-reader']).service('DeviceDataService', ['$q' 'angularFsReader', function ($q, angularFsReader) {
 
