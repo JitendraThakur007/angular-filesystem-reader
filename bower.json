@@ -1,0 +1,24 @@
+{
+  "name": "angular-filesystem-reader",
+  "version": "0.0.0",
+  "authors": [
+    "Ketan Singh <singh.ketan7@gmail.com>"
+  ],
+  "description": "An angular factory implementation to traverse the filesystem starting from a specific root directory. The files can be filtered by file extension. The Exclusive and/or ignorable directories can be specified.",
+  "main": "angular-filesystem-reader.js",
+  "keywords": [
+    "['angular'",
+    "'filesystem'",
+    "'promises'",
+    "'filesystem-reader'",
+    "'traverse'",
+    "'cordova']"
+  ],
+  ignore: [
+    'README.md'
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "angular": ">1.0.6"
+  }
+}
