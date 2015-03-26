@@ -1,14 +1,15 @@
 (function() {
-    angular.module('angular-fs-reader', []).factory('angularFsReader', ['$q', handler]);
+    angular.module('angular-fs-reader', []).service('angularFsReader', ['$q', handler]);
 
     function handler($q) {
 
-        return {
-            getFiles: getFiles
-        };
+        var thisService = this;
 
-        function getFiles(nativeURL, validExtensions, skippable_folders, specific_folders, qualifiedFileHandler, reportError) {
+        //Both 'liveArray' and getFiles have the service 'angularFsReader' as their context.
+        //Hence they can be directly accessed wherever 'angularFsReader' is injected.
+        thisService.liveArray = [];
 
+        thisService.getFiles = function(nativeURL, validExtensions, skippable_folders, specific_folders, qualifiedFileHandler, reportError) {
             var deferred = $q.defer();
 
             var skippables = angular.isArray(skippable_folders);
@@ -18,24 +19,29 @@
             var processThisFile = function (entry) {
                 //1. Matches the file extension with those passed by the user via 'validExtensions'.
                 //2. Returns the fileEntry if there's a match, else returns '[null]'.
+				
                 var deferred = $q.defer();
 
                 var extRegExp = /(?:\.([^.]+))?$/;
-                var allClear = true;
 
                 if (validExtensions.length > 0) {
+
                     var currentExtension = extRegExp.exec(entry.name)[1];
+
                     if (typeof(currentExtension) !== 'undefined') {
-                        allClear = validExtensions.indexOf(currentExtension.toLowerCase()) != -1;
+                        if(validExtensions.indexOf(currentExtension.toLowerCase()) != -1){
+                            thisService.liveArray.push(entry);
+                            deferred.resolve(entry);
+                        }
+                        else{
+                            deferred.resolve(null);
+                        }
                     }
                     else {
-                        allClear = false;
+                        deferred.resolve(null);
                     }
                 }
-                if (allClear === true) {
-                    deferred.resolve(entry);
-                }
-                else {
+                else{
                     deferred.resolve(null);
                 }
 
@@ -178,25 +184,23 @@
                     return $q.all(rawPromiseArray);
 
                 }).then(function (these) {
-                        var finalReturnable = [];
-                        for (var i = 0; i < these.length; i++) {
-                            var value = these[i];
-                            if (value !== null) {
-                                finalReturnable.push(value);
-                            }
+                    var finalReturnable = [];
+                    for (var i = 0; i < these.length; i++) {
+                        var value = these[i];
+                        if (value !== null) {
+                            finalReturnable.push(value);
                         }
-                        if (typeof(qualifiedFileHandler) == typeof (Function)) {
-                            qualifiedFileHandler(finalReturnable);
-                        }
-                        deferred.resolve(finalReturnable);
-                    });
+                    }
+                    if (typeof(qualifiedFileHandler) == typeof (Function)) {
+                        qualifiedFileHandler(finalReturnable);
+                    }
+                    deferred.resolve(finalReturnable);
+                });
 
             };
 
             window.resolveLocalFileSystemURL(nativeURL, exploreFileSystem, reportError);
             return deferred.promise;
         }
-
     }
-
 })();
